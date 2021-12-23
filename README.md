@@ -34,7 +34,7 @@ docker build -f Dockerfile -t themeparks-api .
 Run image:
 
 ```bash
-docker run -d --name themeparks-api --restart=unless-stopped -p 3000:3000 -v "$PWD/data:/app/data" -t themeparks-api .
+docker run -d --name themeparks-api --restart=unless-stopped -p 3000:3000 -v "$PWD/data:/app/data" -t themeparks-api
 ```
 
 ## API
