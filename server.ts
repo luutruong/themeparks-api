@@ -2,12 +2,17 @@ import express, {Request, Response} from 'express'
 import http from 'http'
 import {Park} from 'index'
 import Themeparks from 'themeparks'
+import fs from 'fs'
 
 const app = express()
 const server = http.createServer(app)
 
 const PORT = process.env.PORT || 3000
 
+const dbPath = __dirname + '/data/themeparks.db'
+if (!fs.existsSync(dbPath)) {
+  fs.mkdirSync(dbPath)
+}
 Themeparks.Settings.Cache = __dirname + '/data/themeparks.db'
 
 app.use(express.json({strict: true}))
