@@ -34,7 +34,7 @@ docker build -f Dockerfile -t themeparks-api .
 Run image:
 
 ```bash
-docker run -d --name themeparks-api -p 3000:3000 -v "$PWD/data:/app/data" -t themeparks-api .
+docker run -d --name themeparks-api --restart=unless-stopped -p 3000:3000 -v "$PWD/data:/app/data" -t themeparks-api .
 ```
 
 ## API
@@ -116,3 +116,8 @@ Response:
   results_total: (int)
 }
 ```
+
+## Demo
+
+You can test yourself with this site: [https://themeparks-api-3bhu.herokuapp.com/](https://themeparks-api-3bhu.herokuapp.com/)
+Note: It's free app in heroku so it may not accept large requests.
