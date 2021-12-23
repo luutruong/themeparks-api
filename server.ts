@@ -8,12 +8,14 @@ const app = express()
 const server = http.createServer(app)
 
 const PORT = process.env.PORT || 3000
+const nodeEnv = process.env.NODE_ENV as string
 
-const dbPath = __dirname + '/data/themeparks.db'
-if (!fs.existsSync(dbPath)) {
-  fs.mkdirSync(dbPath)
+const dataDir = nodeEnv === 'production' ? fs.realpathSync(`${__dirname}/../data`) : `${__dirname}/data`
+console.log('dataDir', dataDir)
+if (!fs.existsSync(dataDir)) {
+  fs.mkdirSync(dataDir)
 }
-Themeparks.Settings.Cache = __dirname + '/data/themeparks.db'
+Themeparks.Settings.Cache = `${dataDir}/themeparks.db`
 
 app.use(express.json({strict: true}))
 

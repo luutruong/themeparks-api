@@ -4,6 +4,9 @@ WORKDIR /app
 
 COPY package.json .
 COPY yarn.lock .
+
+RUN apk add --update --no-cache g++ make python3
+RUN ln -s /usr/bin/python3 /usr/bin/python
 RUN yarn install --frozen-lockfile
 
 FROM node:16.3-alpine AS builder

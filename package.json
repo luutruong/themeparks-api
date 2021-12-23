@@ -19,7 +19,7 @@
   },
   "scripts": {
     "dev": "nodemon server.ts",
-    "start": "node dist/server.js",
+    "start": "export NODE_ENV=production && node dist/server.js",
     "build": "tsc --project ./",
     "prettier": "node node_modules/.bin/prettier --write .",
     "lint": "node node_modules/.bin/eslint . --ext .ts"
