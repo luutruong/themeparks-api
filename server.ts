@@ -10,7 +10,7 @@ const server = http.createServer(app)
 const PORT = process.env.PORT || 3000
 const nodeEnv = process.env.NODE_ENV as string
 
-const dataDir = nodeEnv === 'production' ? fs.realpathSync(`${__dirname}/../data`) : `${__dirname}/data`
+const dataDir = nodeEnv === 'production' ? `${__dirname}/../data` : `${__dirname}/data`
 console.log('dataDir', dataDir)
 if (!fs.existsSync(dataDir)) {
   fs.mkdirSync(dataDir)
