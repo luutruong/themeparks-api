@@ -26,7 +26,7 @@ for (const park in Themeparks.Parks) {
     cacheOpeningTimesLength: 3600,
     scheduleDaysToReturn: 60,
   })
-  const id = parkObj.Name.replace(/\s+/g, '_').replace(/[^a-z0-9_]+/gi, '')
+  const id = parkObj.Name.replace(/\s+/, ' ').replace(/\s+/g, '_').replace(/[^a-z0-9_]+/gi, '')
 
   Parks[id] = parkObj
 }
