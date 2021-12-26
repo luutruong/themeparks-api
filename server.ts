@@ -3,6 +3,7 @@ import http from 'http'
 import {Park} from 'index'
 import Themeparks from 'themeparks'
 import fs from 'fs'
+import md5 from 'md5'
 
 const app = express()
 const server = http.createServer(app)
@@ -11,7 +12,6 @@ const PORT = process.env.PORT || 3000
 const nodeEnv = process.env.NODE_ENV as string
 
 const dataDir = nodeEnv === 'production' ? `${__dirname}/../data` : `${__dirname}/data`
-console.log('dataDir', dataDir)
 if (!fs.existsSync(dataDir)) {
   fs.mkdirSync(dataDir)
 }
@@ -26,7 +26,7 @@ for (const park in Themeparks.Parks) {
     cacheOpeningTimesLength: 3600,
     scheduleDaysToReturn: 60,
   })
-  const id = parkObj.Name.replace(/\s+/g, ' ').replace(/\s+/g, '_').replace(/[^a-z0-9_]+/gi, '')
+  const id = md5(parkObj.Name)
 
   Parks[id] = parkObj
 }
@@ -75,10 +75,14 @@ app.get('/parks/:parkId/wait-times', (req: Request, res: Response) => {
 
   Parks[parkId]
     .GetWaitTimes()
+    .then(rideTimes => rideTimes.filter(item => item.waitTime !== null))
     .then((rideTimes) => {
       res.status(200).json({
         status: 'ok',
-        results: rideTimes,
+        results: rideTimes.map(item => ({
+          ...item,
+          id: md5(item.id)
+        })),
         results_total: rideTimes.length,
       })
     })
