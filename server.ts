@@ -3,15 +3,17 @@ import http from 'http'
 import {Park} from 'index'
 import Themeparks from 'themeparks'
 import fs from 'fs'
-import md5 from 'md5'
+import _ from 'lodash'
 
 const app = express()
 const server = http.createServer(app)
 
 const PORT = process.env.PORT || 3000
-const nodeEnv = process.env.NODE_ENV as string
+const dataDir = process.env.DATA_PATH as string
+if (!dataDir) {
+  throw new Error('Must be set DATA_PATH environment variable')
+}
 
-const dataDir = nodeEnv === 'production' ? `${__dirname}/../data` : `${__dirname}/data`
 if (!fs.existsSync(dataDir)) {
   fs.mkdirSync(dataDir)
 }
@@ -26,9 +28,12 @@ for (const park in Themeparks.Parks) {
     cacheOpeningTimesLength: 3600,
     scheduleDaysToReturn: 60,
   })
-  const id = md5(parkObj.Name)
+  const id = _.snakeCase(parkObj.Name)
+  if (_.has(Parks, id)) {
+    console.warn(`Park is exists: ${parkObj.Name}`)
+  }
 
-  Parks[id] = parkObj
+  _.set(Parks, id, parkObj)
 }
 for (const park in Parks) {
   console.log(`* ${Parks[park].Name} [${Parks[park].LocationString}]: (${Parks[park].Timezone})`)
@@ -81,7 +86,7 @@ app.get('/parks/:parkId/wait-times', (req: Request, res: Response) => {
         status: 'ok',
         results: rideTimes.map(item => ({
           ...item,
-          id: md5(item.id)
+          id: item.id,
         })),
         results_total: rideTimes.length,
       })

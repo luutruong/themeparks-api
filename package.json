@@ -4,7 +4,6 @@
   "license": "MIT",
   "dependencies": {
     "express": "^4.17.2",
-    "md5": "^2.3.0",
     "themeparks": "^5.1.52"
   },
   "devDependencies": {
