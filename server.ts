@@ -67,6 +67,33 @@ app.get('/parks', (_req: Request, res: Response) => {
   })
 })
 
+app.get('/parks/:parkId', (req: Request, res: Response) => {
+  const parkId = req.params.parkId as string
+  if (!parkId || !Parks[parkId]) {
+    res.status(400).json({
+      status: 'error',
+      message: 'Invalid park ID.',
+    })
+
+    return
+  }
+
+  const park = Parks[parkId]
+
+  res.status(200).json({
+    status: 'ok',
+    park: {
+      id: parkId,
+      name: park.Name,
+      location: park.LocationString,
+      latitude: park.Latitude,
+      longitude: park.Longitude,
+      timeZone: park.Timezone,
+      mapUrl: park.toGoogleMaps(),
+    }
+  })
+})
+
 app.get('/parks/:parkId/wait-times', (req: Request, res: Response) => {
   const parkId = req.params.parkId as string
   if (!parkId || !Parks[parkId]) {
