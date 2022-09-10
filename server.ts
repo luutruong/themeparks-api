@@ -86,7 +86,7 @@ app.get('/parks/:parkId/wait-times', (req: Request, res: Response) => {
         status: 'ok',
         results: rideTimes.map(item => ({
           ...item,
-          id: item.id,
+          id: String(item.id),
         })),
         results_total: rideTimes.length,
       })

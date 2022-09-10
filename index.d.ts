@@ -20,7 +20,7 @@ export interface Location {
 }
 
 export interface RideWaitTimes {
-  id: string | number
+  id: string
   name: string
   waitTime: number
   active: boolean
@@ -34,12 +34,14 @@ export interface RideWaitTimes {
 export type RideWaitTimesStatus = 'Operating' | 'Closed' | 'Refurbishment' | 'Down'
 
 export interface RideWaitTimesMeta {
-  fastPassStartTime: string
-  fastPassEndTime: string
+  type: string
+  fastPassStartTime?: string
+  fastPassEndTime?: string
   singleRider: boolean
   longitude: number
   latitude: number
-  area: string
+  area?: string
+  entityId: string
 }
 
 export interface RideWaitTimesSchedule {
