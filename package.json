@@ -2,7 +2,6 @@
   "name": "themeparks-server",
   "private": true,
   "license": "MIT",
-  "version": "1.0.4",
   "dependencies": {
     "express": "^4.18.2",
     "lodash": "^4.17.21",

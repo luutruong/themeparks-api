@@ -9,7 +9,7 @@ COPY yarn.lock .
 
 RUN apk add --update --no-cache g++ make python3
 RUN ln -s /usr/bin/python3 /usr/bin/python
-RUN yarn install --frozen-lockfile --ignore-scripts
+RUN yarn install --frozen-lockfile
 
 COPY . .
 RUN yarn build
