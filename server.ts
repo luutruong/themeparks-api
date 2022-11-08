@@ -28,7 +28,9 @@ for (const park in Themeparks.Parks) {
     cacheOpeningTimesLength: 3600,
     scheduleDaysToReturn: 60,
   })
-  const id = _.snakeCase(parkObj.Name)
+
+  // something-foo
+  const id = _.snakeCase(parkObj.Name).replace(/_/g, '-')
   if (_.has(Parks, id)) {
     console.warn(`Park is exists: ${parkObj.Name}`)
   }
@@ -36,7 +38,7 @@ for (const park in Themeparks.Parks) {
   _.set(Parks, id, parkObj)
 }
 for (const park in Parks) {
-  console.log(`* ${Parks[park].Name} [${Parks[park].LocationString}]: (${Parks[park].Timezone})`)
+  console.log(`* ${Parks[park].Name} (${park}): (${Parks[park].Timezone})`)
 }
 
 app.get('/', (_req: Request, res: Response) => {
@@ -146,12 +148,14 @@ app.get('/parks/:parkId/opening-times', (req: Request, res: Response) => {
         results_total: results.length,
       })
     )
-    .catch((err) =>
+    .catch((err) => {
+      console.error(err)
+
       res.status(400).json({
         status: 'error',
         message: err.toString(),
       })
-    )
+    })
 })
 
 server.listen(PORT, () => {
