@@ -3,7 +3,7 @@ name: Publish Docker image
 on:
   push:
     tags:
-      - 'v*.*.*'
+      - '*.*.*'
 
 jobs:
   build:
@@ -21,10 +21,10 @@ jobs:
           echo $RELEASE_VERSION
           echo ${{ steps.vars.outputs.tag }}
 
-      - name: Linter
+      - name: Setup node
         uses: actions/setup-node@v2
         with:
-          node-version: 16
+          node-version: 18
 
       - run: yarn install --frozen-lockfile --ignore-scripts
       - run: yarn lint
@@ -45,7 +45,7 @@ jobs:
             type=raw,value=latest
             type=raw,value=${{ steps.vars.outputs.tag }}
       
-      - name: Build and Push
+      - name: Build and push
         uses: docker/build-push-action@v2
         with:
           push: true
