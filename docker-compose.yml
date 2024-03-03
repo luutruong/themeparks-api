@@ -4,7 +4,7 @@ services:
   node:
     build:
       context: ./
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
     ports:
       - 3100:3000
     volumes:

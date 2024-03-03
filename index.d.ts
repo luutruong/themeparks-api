@@ -1,22 +1,13 @@
-export interface Park extends Location {
-  GetWaitTimes: () => Promise<RideWaitTimes[]>
-  GetOpeningTimes: () => Promise<RideWaitTimesSchedule[]>
-  BuildWaitTimesResponse: () => Promise<any>
-  BuildOpeningTimesResponse: () => Promise<any>
-
-  UpdateRide: (id: number | string, options: {[key: string]: any}) => void
-  GetRideObject: (id: number | string) => {[key: string]: any}
-}
-
-export interface Location {
-  Name: string
-  Timezone: string
-  IsValid: boolean
-  Longitude: string
-  Latitude: string
-  LocationString: string
-
-  toGoogleMaps: () => string
+export interface Park {
+  id: string
+  name: string
+  entityType: string
+  slug: string
+  parentId: string
+  externalId: string
+  latitude: number
+  longitude: number
+  timeZone: string
 }
 
 export interface RideWaitTimes {

@@ -11,6 +11,5 @@ RUN yarn install --frozen-lockfile
 
 COPY . .
 RUN yarn build
-RUN yarn install --production --frozen-lockfile --prefer-dist
 
-CMD ["yarn", "start"]
+CMD ["yarn", "dev"]
