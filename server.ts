@@ -1,6 +1,7 @@
 import express, {Request, Response} from 'express'
 import http from 'http'
 import { Park } from 'index';
+// @ts-expect-error does not support import statement
 const Themeparks = require('themeparks');
 
 const app = express()
